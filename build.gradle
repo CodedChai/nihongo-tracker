@@ -35,6 +35,8 @@ dependencies {
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("io.micronaut.mongodb:micronaut-mongo-reactive")
+    testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1")
 }
 
 mainClassName = "com.codedchai.ApplicationKt"
