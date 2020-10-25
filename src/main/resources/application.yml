@@ -1,3 +1,12 @@
 micronaut:
   application:
     name: nihongoTracker
+mongodb:
+  uri: mongodb+srv://nihongo:<password>@cluster0.cb0gm.mongodb.net/NihongoTracker?retryWrites=true&w=majority
+  options:
+    maxConnectionIdleTime: 10000
+    readConcern: majority
+  cluster:
+    maxWaitQueueSize: 5
+    connectionPool:
+      maxSize: 20
