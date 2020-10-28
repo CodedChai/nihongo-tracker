@@ -16,7 +16,8 @@ class GenkiReminderService() {
         return emptyList()
     }
 
-    fun getTasks(startDate: Date, endDate: Date): List<DailyTask> {
+    fun getTasks(userName: String, startDate: Date, endDate: Date): List<DailyTask> {
+        // TODO: Query Mongo for all tasks between the given date range and user
         return emptyList()
     }
 
