@@ -25,10 +25,11 @@ class GenkiController(
     @Get("/tasks")
     @Produces(MediaType.APPLICATION_JSON)
     fun getTasks(
-            @Header("x-start-date") startDate: Date,
-            @Header("x-end-date") endDate: Date,
+        @Header("x-user-name") userName: String,
+        @Header("x-start-date") startDate: Date,
+        @Header("x-end-date") endDate: Date,
     ): List<DailyTask> {
-        return genkiReminderService.getTasks(startDate, endDate)
+        return genkiReminderService.getTasks(userName, startDate, endDate)
     }
 
 
