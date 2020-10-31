@@ -9,28 +9,29 @@ import javax.inject.Singleton
 @Singleton
 class GenkiReminderService() {//private val taskRepository: TaskRepository) {
 
-    private val logger = KotlinLogging.logger {}
+  private val logger = KotlinLogging.logger {}
 
-    fun getReminders(): List<Reminder> {
-        logger.debug { "getting genki reminders" }
-        return emptyList()
-    }
+  fun getReminders(): List<Reminder> {
+    logger.debug { "getting genki reminders" }
 
-    fun getTasks(userName: String, startDate: Date, endDate: Date): List<DailyTask> {
-        // TODO: Query Mongo for all tasks between the given date range and user
-        // logger.info { taskRepository.findItemsByUsername(userName) }
+    return listOf(Reminder(createdTimestamp = Date(), chapterNumber = 1, reminderDate = Date()))
+  }
 
-        // Make an example daily task in memory - data will be in database once working
-        // return it as a list
-        val dailyTask = DailyTask(
-                _id = null,
-                pageNumber = 10,
-                chapterNumber = 1,
-                dueDate = Date(),
-                isComplete = false,
-                userName = "Shae"
-        )
-        return listOf(dailyTask)
-    }
+  fun getTasks(userName: String, startDate: Date, endDate: Date): List<DailyTask> {
+    // TODO: Query Mongo for all tasks between the given date range and user
+    // logger.info { taskRepository.findItemsByUsername(userName) }
+
+    // Make an example daily task in memory - data will be in database once working
+    // return it as a list
+    val dailyTask = DailyTask(
+        _id = null,
+        pageNumber = 10,
+        chapterNumber = 1,
+        dueDate = Date(),
+        isComplete = false,
+        userName = "Shae"
+    )
+    return listOf(dailyTask)
+  }
 
 }
