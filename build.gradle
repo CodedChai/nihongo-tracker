@@ -25,6 +25,9 @@ micronaut {
 }
 
 dependencies {
+    annotationProcessor "io.micronaut:micronaut-inject-java"
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi"
+    compile "io.swagger.core.v3:swagger-annotations"
     implementation("io.micronaut:micronaut-validation")
     compile 'io.github.microutils:kotlin-logging:1.7.9'
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
@@ -35,7 +38,10 @@ dependencies {
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("io.micronaut.mongodb:micronaut-mongo-reactive")
+    //implementation("io.micronaut.mongodb:micronaut-mongo-reactive")
+    //compile 'org.mongodb:mongo-java-driver:3.12.5'
+    // compile 'org.mongodb:mongodb-driver:3.12.7'
+    compile 'org.litote.kmongo:kmongo:3.12.2'
     testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1")
 }
 
