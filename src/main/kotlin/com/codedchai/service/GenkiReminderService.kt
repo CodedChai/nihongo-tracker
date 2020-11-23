@@ -2,12 +2,13 @@ package com.codedchai.service
 
 import com.codedchai.domain.DailyTask
 import com.codedchai.domain.Reminder
+import com.codedchai.repository.TaskRepository
 import mu.KotlinLogging
 import java.util.*
 import javax.inject.Singleton
 
 @Singleton
-class GenkiReminderService() {//private val taskRepository: TaskRepository) {
+open class GenkiReminderService(private val taskRepository: TaskRepository) {
 
   private val logger = KotlinLogging.logger {}
 
@@ -17,21 +18,11 @@ class GenkiReminderService() {//private val taskRepository: TaskRepository) {
     return listOf(Reminder(createdTimestamp = Date(), chapterNumber = 1, reminderDate = Date()))
   }
 
-  fun getTasks(userName: String, startDate: Date, endDate: Date): List<DailyTask> {
+  suspend fun getTasks(userName: String, startDate: Date, endDate: Date): List<DailyTask?> {
     // TODO: Query Mongo for all tasks between the given date range and user
-    // logger.info { taskRepository.findItemsByUsername(userName) }
-
-    // Make an example daily task in memory - data will be in database once working
-    // return it as a list
-    val dailyTask = DailyTask(
-        _id = null,
-        pageNumber = 10,
-        chapterNumber = 1,
-        dueDate = Date(),
-        isComplete = false,
-        userName = "Shae"
-    )
-    return listOf(dailyTask)
+    return taskRepository.findItemsByUsername(userName).also {
+      logger.info { "found $it from the repo" }
+    }
   }
 
 }

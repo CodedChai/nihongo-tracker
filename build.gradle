@@ -38,10 +38,12 @@ dependencies {
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
-    //implementation("io.micronaut.mongodb:micronaut-mongo-reactive")
+    implementation("io.micronaut.mongodb:micronaut-mongo-reactive")
     //compile 'org.mongodb:mongo-java-driver:3.12.5'
     // compile 'org.mongodb:mongodb-driver:3.12.7'
-    compile 'org.litote.kmongo:kmongo:3.12.2'
+    implementation 'org.litote.kmongo:kmongo:4.2.0'
+    implementation 'org.litote.kmongo:kmongo-async:4.2.0'
+    implementation 'org.litote.kmongo:kmongo-coroutine:4.2.0'
     testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:2.0.1")
 }
 

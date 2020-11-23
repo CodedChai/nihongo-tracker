@@ -10,8 +10,8 @@ import io.micronaut.http.annotation.Header
 import io.micronaut.http.annotation.Produces
 import java.util.*
 
-@Controller("/v1/genki")
-class GenkiController(
+@Controller("/v1")
+open class GenkiController(
     val genkiReminderService: GenkiReminderService
 ) {
 
@@ -23,11 +23,11 @@ class GenkiController(
 
   @Get("/tasks")
   @Produces(MediaType.APPLICATION_JSON)
-  fun getTasks(
+  suspend fun getTasks(
       @Header("x-user-name") userName: String,
 //        @Header("x-start-date") startDate: Date,
 //        @Header("x-end-date") endDate: Date,
-  ): List<DailyTask> {
+  ): List<DailyTask?> {
     return genkiReminderService.getTasks(userName, Date(), Date())
   }
 

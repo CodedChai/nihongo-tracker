@@ -1,25 +1,25 @@
 package com.codedchai.repository
 
 import com.codedchai.domain.DailyTask
-import com.codedchai.utils.MongoUtils
-import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters.eq
 import mu.KotlinLogging
+import org.litote.kmongo.coroutine.coroutine
+import org.litote.kmongo.reactivestreams.KMongo
 import javax.inject.Singleton
 
 @Singleton
-open class TaskRepository(mongoUtils: MongoUtils) {
+open class TaskRepository() {
 
   private val logger = KotlinLogging.logger { }
 
-  var mongoCollection: MongoCollection<DailyTask> = mongoUtils.getMongoCollection("nihongo_tracker")
+  private val client = KMongo.createClient("mongodb+srv://nihongo:<password>@cluster0.cb0gm.mongodb.net/NihongoTracker?retryWrites=true&w=majority").coroutine //use coroutine extension
+  private val database = client.getDatabase("NihongoTracker") //normal java driver usage
+  private val collection = database.getCollection<DailyTask>("DailyTask") //KMongo extension method
 
-
-  open fun findItemsByUsername(username: String): List<DailyTask?> {
-    val key = DailyTask::userName.name
-    val filter = eq(key, username)
-
-    return mongoCollection.find(filter).sortedBy { it.dueDate }
+  open suspend fun findItemsByUsername(username: String): List<DailyTask?> {
+    logger.info { "searching for username $username" }
+    return collection.find(
+        eq(DailyTask::userName.name, username)
+    ).toList()
   }
-
 }
