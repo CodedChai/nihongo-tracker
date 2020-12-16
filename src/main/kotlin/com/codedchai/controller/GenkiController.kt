@@ -4,10 +4,7 @@ import com.codedchai.domain.DailyTask
 import com.codedchai.domain.Reminder
 import com.codedchai.service.GenkiReminderService
 import io.micronaut.http.MediaType
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
-import io.micronaut.http.annotation.Header
-import io.micronaut.http.annotation.Produces
+import io.micronaut.http.annotation.*
 import java.util.*
 
 @Controller("/v1")
@@ -29,6 +26,13 @@ open class GenkiController(
 //        @Header("x-end-date") endDate: Date,
   ): List<DailyTask?> {
     return genkiReminderService.getTasks(userName, Date(), Date())
+  }
+
+  @Post("/tasks/create")
+  suspend fun createDailyTask(
+      @Header("x-user-name") userName: String,
+  ) {
+    genkiReminderService.saveDailyTask()
   }
 
 }
