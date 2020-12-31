@@ -1,6 +1,13 @@
 micronaut:
   application:
     name: nihongoTracker
+  server:
+    cors:
+      enabled: true
+      configurations:
+        web:
+          allowedOrigins:
+            - http://localhost:4200*
 mongodb:
   uri: mongodb+srv://nihongo:<password>@cluster0.cb0gm.mongodb.net/NihongoTracker?retryWrites=true&w=majority
   options:
