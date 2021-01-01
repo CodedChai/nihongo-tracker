@@ -19,10 +19,8 @@ open class GenkiReminderService(private val taskRepository: TaskRepository) {
   }
 
   suspend fun getTasks(userName: String, startDate: Date, endDate: Date): List<DailyTask?> {
-    // TODO: Query Mongo for all tasks between the given date range and user
-    return taskRepository.findItemsByUsername(userName).also {
-      logger.info { "found $it from the repo" }
-    }
+    return taskRepository.findItemsByUsername(userName)
+      .also { logger.info { "found $it from the repo" } }
   }
 
   suspend fun saveDailyTask() {

@@ -9,7 +9,7 @@ import java.util.*
 
 @Controller("/v1")
 open class GenkiController(
-    val genkiReminderService: GenkiReminderService
+  val genkiReminderService: GenkiReminderService
 ) {
 
   @Get("/reminders")
@@ -21,16 +21,14 @@ open class GenkiController(
   @Get("/tasks")
   @Produces(MediaType.APPLICATION_JSON)
   suspend fun getTasks(
-      @Header("x-user-name") userName: String,
-//        @Header("x-start-date") startDate: Date,
-//        @Header("x-end-date") endDate: Date,
+    @Header("x-user-name") userName: String
   ): List<DailyTask?> {
     return genkiReminderService.getTasks(userName, Date(), Date())
   }
 
   @Post("/tasks/create")
   suspend fun createDailyTask(
-      @Header("x-user-name") userName: String,
+    @Header("x-user-name") userName: String,
   ) {
     genkiReminderService.saveDailyTask()
   }
