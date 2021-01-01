@@ -18,7 +18,7 @@ open class GenkiReminderService(private val taskRepository: TaskRepository) {
     return listOf(Reminder(createdTimestamp = Date(), chapterNumber = 1, reminderDate = Date()))
   }
 
-  suspend fun getTasks(userName: String, startDate: Date, endDate: Date): List<DailyTask?> {
+  suspend fun getTasks(userName: String): List<DailyTask?> {
     return taskRepository.findItemsByUsername(userName)
       .also { logger.info { "found $it from the repo" } }
   }
