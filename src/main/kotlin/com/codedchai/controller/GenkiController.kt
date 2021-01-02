@@ -5,11 +5,14 @@ import com.codedchai.domain.Reminder
 import com.codedchai.service.GenkiReminderService
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
+import mu.KotlinLogging
 
 @Controller("/v1")
 open class GenkiController(
   val genkiReminderService: GenkiReminderService
 ) {
+
+  private val logger = KotlinLogging.logger {}
 
   @Get("/reminders")
   @Produces(MediaType.APPLICATION_JSON)
@@ -26,10 +29,12 @@ open class GenkiController(
   }
 
   @Post("/tasks/create")
+  @Produces(MediaType.APPLICATION_JSON)
   suspend fun createDailyTask(
     @Header("x-user-name") userName: String,
-  ) {
-    genkiReminderService.saveDailyTask()
+    @Body dailyTask: DailyTask
+  ): DailyTask {
+    logger.info { "Create endpoint called" }
+    return genkiReminderService.saveDailyTask(dailyTask)
   }
-
 }

@@ -23,9 +23,10 @@ open class GenkiReminderService(private val taskRepository: TaskRepository) {
       .also { logger.info { "found $it from the repo" } }
   }
 
-  suspend fun saveDailyTask() {
-    val dailyTask = DailyTask(null, 1, 1, Date(), false, "Connor")
+  suspend fun saveDailyTask(dailyTask: DailyTask): DailyTask {
+    logger.info { "saving daily task for ${dailyTask.userName}" }
     taskRepository.save(dailyTask = dailyTask)
+    return dailyTask
   }
 
 }

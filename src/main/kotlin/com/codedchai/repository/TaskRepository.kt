@@ -14,7 +14,7 @@ class TaskRepository() {
   private val logger = KotlinLogging.logger { }
 
   private val client =
-    KMongo.createClient("mongodb+srv://nihongo:<pw>>@cluster0.cb0gm.mongodb.net/NihongoTracker?retryWrites=true&w=majority").coroutine
+    KMongo.createClient("mongodb+srv://nihongo:<pw>@cluster0.cb0gm.mongodb.net/NihongoTracker?retryWrites=true&w=majority").coroutine
   private val database = client.getDatabase("NihongoTracker")
   private val collection = database.getCollection<DailyTask>("DailyTask")
 
