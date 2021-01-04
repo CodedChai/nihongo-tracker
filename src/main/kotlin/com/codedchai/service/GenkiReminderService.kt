@@ -8,7 +8,9 @@ import java.util.*
 import javax.inject.Singleton
 
 @Singleton
-open class GenkiReminderService(private val taskRepository: TaskRepository) {
+open class GenkiReminderService(
+  private val taskRepository: TaskRepository
+) {
 
   private val logger = KotlinLogging.logger {}
 
@@ -25,8 +27,22 @@ open class GenkiReminderService(private val taskRepository: TaskRepository) {
 
   suspend fun saveDailyTask(dailyTask: DailyTask): DailyTask {
     logger.info { "saving daily task for ${dailyTask.userName}" }
+
     taskRepository.save(dailyTask = dailyTask)
+
     return dailyTask
+  }
+
+  suspend fun completeDailyTask(dailyTask: DailyTask, dailyTaskId: String): DailyTask {
+    logger.info { "saving daily task for ${dailyTask.userName}" }
+
+    val wasAcknowledged = taskRepository.updateTaskToCompleted(dailyTaskId = dailyTaskId)
+
+    return if (wasAcknowledged) {
+      dailyTask.copy(isComplete = true)
+    } else {
+      dailyTask
+    }
   }
 
 }

@@ -2,10 +2,11 @@ package com.codedchai.repository
 
 import com.codedchai.domain.DailyTask
 import com.mongodb.client.model.Filters.eq
-import com.mongodb.client.result.UpdateResult
 import mu.KotlinLogging
+import org.litote.kmongo.and
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
+import org.litote.kmongo.setValue
 import javax.inject.Singleton
 
 @Singleton
@@ -26,9 +27,20 @@ class TaskRepository() {
     ).toList()
   }
 
-  suspend fun save(dailyTask: DailyTask): UpdateResult? {
+  suspend fun save(dailyTask: DailyTask): Boolean {
     logger.info { "saving $dailyTask" }
 
-    return collection.save(dailyTask)
+    return collection.save(dailyTask)?.wasAcknowledged() ?: false
+  }
+
+  suspend fun updateTaskToCompleted(dailyTaskId: String): Boolean {
+    logger.info { "completing task for $dailyTaskId" }
+
+    return collection.updateOne(
+      eq(DailyTask::_id.name, dailyTaskId),
+      and(
+        setValue(DailyTask::isComplete, true)
+      )
+    ).wasAcknowledged()
   }
 }

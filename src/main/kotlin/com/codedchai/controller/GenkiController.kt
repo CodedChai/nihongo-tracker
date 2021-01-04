@@ -3,6 +3,7 @@ package com.codedchai.controller
 import com.codedchai.domain.DailyTask
 import com.codedchai.domain.Reminder
 import com.codedchai.service.GenkiReminderService
+import io.micronaut.context.annotation.Parameter
 import io.micronaut.http.MediaType
 import io.micronaut.http.annotation.*
 import mu.KotlinLogging
@@ -36,5 +37,16 @@ open class GenkiController(
   ): DailyTask {
     logger.info { "Create endpoint called" }
     return genkiReminderService.saveDailyTask(dailyTask)
+  }
+
+  @Put("/tasks/{taskId}/complete")
+  @Produces(MediaType.APPLICATION_JSON)
+  suspend fun completeDailyTask(
+    @Header("x-user-name") userName: String,
+    @Parameter taskId: String,
+    @Body dailyTask: DailyTask
+  ): DailyTask {
+    logger.info { "update to complete endpoint called" }
+    return genkiReminderService.completeDailyTask(dailyTask, taskId)
   }
 }
