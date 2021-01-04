@@ -34,6 +34,10 @@ open class GenkiReminderService(
   }
 
   suspend fun completeDailyTask(dailyTask: DailyTask, dailyTaskId: String): DailyTask {
+    if (dailyTask.isComplete) {
+      return dailyTask
+    }
+
     logger.info { "saving daily task for ${dailyTask.userName}" }
 
     val wasAcknowledged = taskRepository.updateTaskToCompleted(dailyTaskId = dailyTaskId)
