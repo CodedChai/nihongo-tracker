@@ -25,22 +25,22 @@ open class GenkiReminderService(
       .also { logger.info { "found $it from the repo" } }
   }
 
-  suspend fun saveDailyTask(dailyTask: DailyTask): DailyTask {
-    logger.info { "saving daily task for ${dailyTask.userName}" }
+  suspend fun saveDailyTask(dailyTask: DailyTask, userName: String): DailyTask {
+    logger.info { "saving daily task for $userName" }
 
     taskRepository.save(dailyTask = dailyTask)
 
     return dailyTask
   }
 
-  suspend fun completeDailyTask(dailyTask: DailyTask, dailyTaskId: String): DailyTask {
+  suspend fun completeDailyTask(dailyTask: DailyTask, dailyTaskId: String, userName: String): DailyTask {
     if (dailyTask.isComplete) {
       return dailyTask
     }
 
     logger.info { "saving daily task for ${dailyTask.userName}" }
 
-    val wasAcknowledged = taskRepository.updateTaskToCompleted(dailyTaskId = dailyTaskId)
+    val wasAcknowledged = taskRepository.updateTaskToCompleted(dailyTaskId = dailyTaskId, userName = userName)
 
     return if (wasAcknowledged) {
       dailyTask.copy(isComplete = true)

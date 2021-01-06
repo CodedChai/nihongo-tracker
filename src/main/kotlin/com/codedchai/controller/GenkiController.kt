@@ -36,7 +36,7 @@ open class GenkiController(
     @Body dailyTask: DailyTask
   ): DailyTask {
     logger.info { "Create endpoint called" }
-    return genkiReminderService.saveDailyTask(dailyTask)
+    return genkiReminderService.saveDailyTask(dailyTask, userName)
   }
 
   @Put("/tasks/{taskId}/complete")
@@ -47,6 +47,6 @@ open class GenkiController(
     @Body dailyTask: DailyTask
   ): DailyTask {
     logger.info { "update to complete endpoint called" }
-    return genkiReminderService.completeDailyTask(dailyTask, taskId)
+    return genkiReminderService.completeDailyTask(dailyTask, taskId, userName)
   }
 }

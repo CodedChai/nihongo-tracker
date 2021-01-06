@@ -33,11 +33,14 @@ class TaskRepository() {
     return collection.save(dailyTask)?.wasAcknowledged() ?: false
   }
 
-  suspend fun updateTaskToCompleted(dailyTaskId: String): Boolean {
+  suspend fun updateTaskToCompleted(dailyTaskId: String, userName: String): Boolean {
     logger.info { "completing task for $dailyTaskId" }
 
     return collection.updateOne(
-      eq(DailyTask::_id.name, dailyTaskId),
+      and(
+        eq(DailyTask::_id.name, dailyTaskId),
+        eq(DailyTask::userName.name, userName)
+      ),
       and(
         setValue(DailyTask::isComplete, true)
       )
